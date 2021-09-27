@@ -17,3 +17,13 @@
   * @BeforeEach (Junit4: Before) : 각 테스트 시작 전
   * @AfterEach (Junit4: After) : 각 테스트 시작 후
   * @Disabled (Junit4: @Ignored) : 테스트 코드 실행 안하게 해줌
+
+## JUnit5 테스트 이름 표시하기
+- @DisplayNameGeneration
+  * Method와 Class 레퍼런스를 사용해서 테스트 이름을 표기하는 방법 설정.
+  * 기본 구현체로 ReplaceUnderscores 제공
+- @DisplayName
+  * 어떤 테스트인지 테스트 이름을 보다 쉽게 표현할 수 있는 방법을 제공하는 애노테이션.
+  * @DisplayNameGeneration 보다 우선 순위가 높다.
+- 참고
+  * https://junit.org/junit5/docs/current/user-guide/#writing-tests-display-names
