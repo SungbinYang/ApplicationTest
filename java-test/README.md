@@ -55,3 +55,26 @@
   * IfSystemProperty
   * IfEnvironmentVariable
   * If (Depercated)
+
+## JUnit 5: 태깅과 필터링
+- 테스트 그룹을 만들고 원하는 테스트 그룹만 테스트를 실행할 수 있는 기능.
+- @Tag
+  * 테스트 메소드에 태그를 추가할 수 있다.
+  * 하나의 테스트 메소드에 여러 태그를 사용할 수 있다.
+- 인텔리J에서 특정 태그로 테스트 필터링 하는 방법
+
+![스크린샷 2021-09-29 오전 6 11 26](https://user-images.githubusercontent.com/18282470/135166304-f55432e2-a28b-495c-99aa-170a5b78dd07.png)
+
+- 메이븐에서 테스트 필터링 하는 방법
+
+``` xml
+<plugin>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <groups>fast | slow</groups>
+    </configuration>
+</plugin>
+```
+- 참고
+  * https://maven.apache.org/guides/introduction/introduction-to-profiles.html
+  * https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions
