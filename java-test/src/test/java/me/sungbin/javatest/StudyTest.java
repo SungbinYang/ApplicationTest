@@ -1,19 +1,42 @@
 package me.sungbin.javatest;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
     @Test
     @DisplayName("스터디 만들기 \uD83D\uDE1E")
+    @EnabledOnOs({OS.MAC, OS.LINUX})
+    @EnabledOnJre({JRE.JAVA_8, JRE.JAVA_11, JRE.JAVA_15})
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
     void create_new_study() {
+
+//        String test_env = System.getenv("TEST_ENV");
+//        System.out.println(test_env);
+//        assumeTrue("LOCAL".equalsIgnoreCase(test_env)); // 로컬인 경우에만 다음 테스트 코드 출력
+
+//        assumingThat("LOCAL".equalsIgnoreCase(test_env), () -> {
+//            System.out.println("LOCAL");
+//            Study actual = new Study(10);
+//            assertThat(actual.getLimit()).isGreaterThan(0);
+//        });
+//
+//        assumingThat("sungbin".equalsIgnoreCase(test_env), () -> {
+//            System.out.println("sungbin");
+//            Study actual = new Study(100);
+//            assertThat(actual.getLimit()).isGreaterThan(0);
+//        });
+
 //        Study study = new Study(10);
 //        assertAll(
 //                () -> assertNotNull(study),
@@ -33,8 +56,10 @@ class StudyTest {
     }
 
     @Test
-    @Disabled
+    @DisabledOnOs(OS.MAC)
     @DisplayName("스터디 만들기 \uD83E\uDD24")
+    @EnabledOnJre(JRE.OTHER)
+    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "sungbin")
     void create_new_study_again() {
         System.out.println("create1");
     }
