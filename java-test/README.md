@@ -27,3 +27,19 @@
   * @DisplayNameGeneration 보다 우선 순위가 높다.
 - 참고
   * https://junit.org/junit5/docs/current/user-guide/#writing-tests-display-names
+
+## JUnit5 Assertions
+- org.junit.jupiter.api.Assertions.*
+
+|||
+|------|---|
+|실제 값이 기대한 값과 같은지 확인|assertEqulas(expected, actual)|
+|값이 null이 아닌지 확인|assertNotNull(actual)|
+|다음 조건이 참(true)인지 확인|assertTrue(boolean)|
+|모든 확인 구문 확인|assertAll(executables...)|
+|예외 발생 확인|assertThrows(expectedType, executable)|
+|특정 시간 안에 실행이 완료되는지 확인|assertTimeout(duration, executable)|
+
+- 마지막 매개변수로 Supplier<String> 타입의 인스턴스를 람다 형태로 제공할 수 있다.
+  * 복잡한 메시지 생성해야 하는 경우 사용하면 실패한 경우에만 해당 메시지를 만들게 할 수 있다.
+- AssertJ, Hemcrest, Truth 등의 라이브러리를 사용할 수도 있다.
