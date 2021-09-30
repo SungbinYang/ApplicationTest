@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
-    @Test
-    @Tag("fast")
+    @FastTest
     @DisplayName("스터디 만들기 fast")
 //    @EnabledOnOs({OS.MAC, OS.LINUX})
 //    @EnabledOnJre({JRE.JAVA_8, JRE.JAVA_11, JRE.JAVA_15})
@@ -56,9 +55,8 @@ class StudyTest {
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
-    @Test
 //    @DisabledOnOs(OS.MAC)
-    @Tag("slow")
+    @SlowTest
     @DisplayName("스터디 만들기 slow")
 //    @EnabledOnJre(JRE.OTHER)
 //    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "sungbin")
