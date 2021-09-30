@@ -114,3 +114,24 @@ void create_new_study_again()
     * {index}
     * {arguments}
     * {0}, {1}, ..
+- 인자 값들의 소스
+  * @ValueSource
+  * @NullSource, @EmptySource, @NullAndEmptySource
+  * @EnumSource
+  * @MethodSource
+  * @CsvSource
+  * @CvsFileSource
+  * @ArgumentSource
+- 인자 값 타입 변환
+  * 암묵적인 타입 변환
+    * [레퍼런스](https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-argument-aggregation) 참고
+  * 명시적인 타입 변환
+    * SimpleArgumentConverter 상속 받은 구현체 제공
+    * @ConvertWith
+- 인자 값 조합
+  * ArgumentsAccessor
+  * 커스텀 Accessor
+    * ArgumentsAggregator 인터페이스 구현
+    * @AggregateWith
+- 참고
+  * https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests
