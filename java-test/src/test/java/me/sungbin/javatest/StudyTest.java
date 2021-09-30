@@ -2,6 +2,8 @@ package me.sungbin.javatest;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 import java.util.function.Supplier;
@@ -62,6 +64,19 @@ class StudyTest {
 //    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "sungbin")
     void create_new_study_again() {
         System.out.println("create1");
+    }
+
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
+    @DisplayName("반복 테스트")
+    void repeatStudy(RepetitionInfo repetitionInfo) {
+        System.out.println("test" + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+    }
+
+    @DisplayName("파라미터 반복 테스트")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요."})
+    void parameterizedTest(String message) {
+        System.out.println(message);
     }
 
     @BeforeAll
