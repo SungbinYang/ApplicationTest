@@ -78,3 +78,25 @@
 - 참고
   * https://maven.apache.org/guides/introduction/introduction-to-profiles.html
   * https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions
+
+## JUnit5 커스텀 태그
+- JUnit 5 애노테이션을 조합하여 커스텀 태그를 만들 수 있다.
+
+``` java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Tag("fast")
+@Test
+public @interface FastTest {
+}
+```
+
+``` java
+@FastTest
+@DisplayName("스터디 만들기 fast")
+void create_new_study() {
+
+@SlowTest
+@DisplayName("스터디 만들기 slow")
+void create_new_study_again() 
+```
