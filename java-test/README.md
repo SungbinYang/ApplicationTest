@@ -254,3 +254,37 @@ junit.jupiter.displayname.generator.default = \
   * Mock의 행동을 검증하는 방법
 - Mockito 레퍼런스
   * https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+
+## Mock 객체 만들기
+- Mockito.mock() 메소드로 만드는 방법
+``` java
+   MemberService memberService = mock(MemberService.class);
+   StudyRepository studyRepository = mock(StudyRepository.class);
+```
+
+- @Mock 애노테이션으로 만드는 방법
+  * JUnit 5 extension으로 MockitoExtension을 사용해야 한다.
+  * 필드
+  * 메소드 매개변수
+``` java
+@ExtendWith(MockitoExtension.class)
+class StudyServiceTest {
+
+    @Mock MemberService memberService;
+
+    @Mock StudyRepository studyRepository;
+}
+```
+``` java
+@ExtendWith(MockitoExtension.class)
+class StudyServiceTest {
+    
+    @Test
+    void createStudyService(@Mock MemberService memberService,
+                            @Mock StudyRepository studyRepository) {
+        StudyService studyService = new StudyService(memberService, studyRepository);
+        assertNotNull(studyService);
+    }
+
+}
+```
