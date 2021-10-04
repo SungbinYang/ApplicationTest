@@ -226,3 +226,31 @@ junit.jupiter.displayname.generator.default = \
 ![스크린샷 2021-10-05 오전 5 37 21](https://user-images.githubusercontent.com/18282470/135921382-1582b938-9cd2-4d6b-90ff-8ee1fb7be22b.png)
 
 - 대체제: [EasyMock](https://easymock.org/), [JMock](http://jmock.org/)
+
+## Mockito 시작하기
+- 스프링 부트 2.2+ 프로젝트 생성시 spring-boot-starter-test에서 자동으로 Mockito 추가해 줌.
+
+- 스프링 부트 쓰지 않는다면, 의존성 직접 추가.
+``` xml
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>3.1.0</version>
+    <scope>test</scope>
+</dependency>
+
+
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <version>3.1.0</version>
+    <scope>test</scope>
+</dependency>
+```
+
+- 다음 세 가지만 알면 Mock을 활용한 테스트를 쉽게 작성할 수 있다.
+  * Mock을 만드는 방법
+  * Mock이 어떻게 동작해야 하는지 관리하는 방법
+  * Mock의 행동을 검증하는 방법
+- Mockito 레퍼런스
+  * https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
