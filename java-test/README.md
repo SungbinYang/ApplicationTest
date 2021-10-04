@@ -199,3 +199,17 @@ junit.jupiter.displayname.generator.default = \
   * 예외 처리
 - 참조
   * https://junit.org/junit5/docs/current/user-guide/#extensions
+
+## JUnit 5: JUnit 4 마이그레이션
+- junit-vintage-engine을 의존성으로 추가하면, JUnit 5의 junit-platform으로 JUnit 3과 4로 작성된 테스트를 실행할 수 있다.
+  * @Rule은 기본적으로 지원하지 않지만, junit-jupiter-migrationsupport 모듈이 제공하는 @EnableRuleMigrationSupport를 사용하면 다음 타입의 Rule을 지원한다.
+    * ExternalResource
+    * Verifier
+    * ExpectedException
+
+|JUnit 4|JUnit 5|
+|------|---|
+|@Category(Class)|@Tag(String)|
+|@RunWith, @Rule, @ClassRule|@ExtendWith, @RegisterExtension|
+|@Ignore|@Disabled|
+|@Before, @After, @BeforeClass, @AfterClass|@BeforeEach, @AfterEach, @BeforeAll, @AfterAll|
