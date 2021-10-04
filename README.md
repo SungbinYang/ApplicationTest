@@ -11,3 +11,4 @@
 - JUnit 5: 테스트 반복하기
 - JUnit 5: 테스트 인스턴스
 - JUnit 5: 테스트 순서
+- JUnit 5: junit-platform.properties
