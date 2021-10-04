@@ -16,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StudyTest {
 
     int value = 1;
 
+    @Order(2)
     @FastTest
     @DisplayName("스터디 만들기 fast")
 //    @EnabledOnOs({OS.MAC, OS.LINUX})
@@ -64,6 +66,7 @@ class StudyTest {
     }
 
 //    @DisabledOnOs(OS.MAC)
+    @Order(1)
     @SlowTest
     @DisplayName("스터디 만들기 slow")
 //    @EnabledOnJre(JRE.OTHER)
@@ -73,6 +76,7 @@ class StudyTest {
         System.out.println("create1 " + value++);
     }
 
+    @Order(3)
     @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
     @DisplayName("반복 테스트")
     void repeatStudy(RepetitionInfo repetitionInfo) {
@@ -91,6 +95,7 @@ class StudyTest {
 
     //    @ValueSource(ints = {10, 20, 40})
     //    @NullAndEmptySource
+    @Order(4)
     @DisplayName("파라미터 반복 테스트")
     @ParameterizedTest(name = "{index} {displayName} message={0}")
     @CsvSource({"10, '자바 스터디'", "20, 스프링"})
@@ -118,12 +123,12 @@ class StudyTest {
     }
 
     @BeforeAll
-    void beforeAll() {
+    static void beforeAll() {
         System.out.println("before All");
     }
 
     @AfterAll
-    void afterAll() {
+    static void afterAll() {
         System.out.println("after all");
     }
 
