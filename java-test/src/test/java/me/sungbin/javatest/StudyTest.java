@@ -8,20 +8,17 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
-import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTimeout;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudyTest {
+
+    int value = 1;
 
     @FastTest
     @DisplayName("스터디 만들기 fast")
@@ -56,11 +53,13 @@ class StudyTest {
 //        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
 //        String message = exception.getMessage();
 //        assertEquals("limit은 0보다 커야한다.", exception.getMessage());
-        assertTimeout(Duration.ofMillis(100), () -> {
-            new Study(10);
-            Thread.sleep(10);
-        });
-        Study actual = new Study(10);
+//        assertTimeout(Duration.ofMillis(100), () -> {
+//            new Study(10);
+//            Thread.sleep(10);
+//        });
+        System.out.println(this);
+        System.out.println(value++);
+        Study actual = new Study(1);
         assertThat(actual.getLimit()).isGreaterThan(0);
     }
 
@@ -70,7 +69,8 @@ class StudyTest {
 //    @EnabledOnJre(JRE.OTHER)
 //    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "sungbin")
     void create_new_study_again() {
-        System.out.println("create1");
+        System.out.println(this);
+        System.out.println("create1 " + value++);
     }
 
     @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
@@ -107,6 +107,7 @@ class StudyTest {
     }
 
     // ValueSource의 매개뱐수의 타입을 메소드 파라미터에 있는 타입으로 변환
+    // 하나의 Argument에만 변환가능하고 2개이상일 경우 ArgumentAggregator로 사용가능하다.
     static class StudyConverter extends SimpleArgumentConverter {
 
         @Override
@@ -117,12 +118,12 @@ class StudyTest {
     }
 
     @BeforeAll
-    static void beforeAll() {
+    void beforeAll() {
         System.out.println("before All");
     }
 
     @AfterAll
-    static void afterAll() {
+    void afterAll() {
         System.out.println("after all");
     }
 
