@@ -213,3 +213,16 @@ junit.jupiter.displayname.generator.default = \
 |@RunWith, @Rule, @ClassRule|@ExtendWith, @RegisterExtension|
 |@Ignore|@Disabled|
 |@Before, @After, @BeforeClass, @AfterClass|@BeforeEach, @AfterEach, @BeforeAll, @AfterAll|
+
+## Mockito 소개
+- Mock: 진짜 객체와 비슷하게 동작하지만 프로그래머가 직접 그 객체의 행동을 관리하는 객체.
+- [Mockito](https://site.mockito.org/): Mock 객체를 쉽게 만들고 관리하고 검증할 수 있는 방법을 제공한다.
+- 테스트를 작성하는 자바 개발자 50%+ 사용하는 Mock 프레임워크.
+  * https://www.jetbrains.com/lp/devecosystem-2021/java/
+- 현재 최신 버전 3.12.4
+- 단위 테스트에 고찰
+  * https://martinfowler.com/bliki/UnitTest.html
+
+![스크린샷 2021-10-05 오전 5 37 21](https://user-images.githubusercontent.com/18282470/135921382-1582b938-9cd2-4d6b-90ff-8ee1fb7be22b.png)
+
+- 대체제: [EasyMock](https://easymock.org/), [JMock](http://jmock.org/)
