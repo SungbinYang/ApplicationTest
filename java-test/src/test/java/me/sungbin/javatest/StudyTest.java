@@ -1,7 +1,7 @@
 package me.sungbin.javatest;
 
+import me.sungbin.javatest.domain.Study;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -69,7 +69,7 @@ class StudyTest {
         System.out.println(this);
         System.out.println(value++);
         Study actual = new Study(1);
-        assertThat(actual.getLimit()).isGreaterThan(0);
+        assertThat(actual.getLimitCount()).isGreaterThan(0);
     }
 
 //    @DisabledOnOs(OS.MAC)
