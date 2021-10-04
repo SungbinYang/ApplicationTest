@@ -154,3 +154,30 @@ void create_new_study_again()
     * Alphanumeric
     * OrderAnnoation
     * Random
+
+## JUnit 5: junit-platform.properties
+- JUnit 설정 파일로, 클래스패스 루트 (src/test/resources/)에 넣어두면 적용된다.
+- 테스트 인스턴스 라이프사이클 설정
+ 
+``` properties
+junit.jupiter.testinstance.lifecycle.default = per_class
+```
+
+- 확장팩 자동 감지 기능
+
+``` properties
+junit.jupiter.extensions.autodetection.enabled = true
+```
+
+- @Disabled 무시하고 실행하기
+
+``` properties
+junit.jupiter.conditions.deactivate = org.junit.*DisabledCondition
+```
+
+- 테스트 이름 표기 전략 설정
+
+``` properties
+junit.jupiter.displayname.generator.default = \
+    org.junit.jupiter.api.DisplayNameGenerator$ReplaceUnderscores
+```
