@@ -19,8 +19,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class StudyServiceTest {
 
+    @Mock MemberService memberService;
+    
+    @Mock StudyRepository studyRepository;
+
     @Test
-    void createNewStudy(@Mock MemberService memberService, @Mock StudyRepository studyRepository) {
+    void createNewStudy() {
 
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
@@ -42,19 +46,29 @@ class StudyServiceTest {
 //
 //        memberService.validate(2L);
 
-        when(memberService.findById(any()))
-                .thenReturn(Optional.of(member))
-                .thenThrow(new RuntimeException())
-                .thenReturn(Optional.empty());
+//        when(memberService.findById(any()))
+//                .thenReturn(Optional.of(member))
+//                .thenThrow(new RuntimeException())
+//                .thenReturn(Optional.empty());
+//
+//        Optional<Member> byId = memberService.findById(1L);
+//        assertEquals("sungbin@email.com", byId.get().getEmail());
+//
+//        assertThrows(RuntimeException.class, () -> {
+//            memberService.findById(1L);
+//        });
+//
+//        assertEquals(Optional.empty(), memberService.findById(3L));
 
-        Optional<Member> byId = memberService.findById(1L);
-        assertEquals("sungbin@email.com", byId.get().getEmail());
+        Study study = new Study(10, "테스트");
+        when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
-        assertThrows(RuntimeException.class, () -> {
-            memberService.findById(1L);
-        });
+        when(studyRepository.save(study)).thenReturn(study);
 
-        assertEquals(Optional.empty(), memberService.findById(3L));
+        studyService.createNewStudy(1L, study);
+
+        assertNotNull(study.getOwner());
+        assertEquals(member, study.getOwner());
 
 //        studyService.createNewStudy(1L, study);
     }
