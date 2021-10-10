@@ -5,6 +5,7 @@ import me.sungbin.javatest.domain.Study;
 import me.sungbin.javatest.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,14 +14,13 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudyServiceTest {
 
     @Mock MemberService memberService;
-    
+
     @Mock StudyRepository studyRepository;
 
     @Test
@@ -69,6 +69,17 @@ class StudyServiceTest {
 
         assertNotNull(study.getOwner());
         assertEquals(member, study.getOwner());
+
+        verify(memberService, times(1)).notify(study);
+        verify(memberService, times(1)).notify(member);
+        verify(memberService, never()).validate(any());
+
+        InOrder inOrder = inOrder(memberService);
+        inOrder.verify(memberService).notify(study);
+
+        verifyNoMoreInteractions(memberService);
+
+        inOrder.verify(memberService).notify(member);// 메소드 호출 순서를 확인한다.
 
 //        studyService.createNewStudy(1L, study);
     }
