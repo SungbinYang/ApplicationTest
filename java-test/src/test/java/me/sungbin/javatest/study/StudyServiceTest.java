@@ -3,6 +3,7 @@ package me.sungbin.javatest.study;
 import me.sungbin.javatest.domain.Member;
 import me.sungbin.javatest.domain.Study;
 import me.sungbin.javatest.member.MemberService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
@@ -14,6 +15,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,8 +27,10 @@ class StudyServiceTest {
     @Mock StudyRepository studyRepository;
 
     @Test
+    @DisplayName("새로운 스터디를 만드는 테스트")
     void createNewStudy() {
 
+        // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
 
@@ -61,23 +66,31 @@ class StudyServiceTest {
 //        assertEquals(Optional.empty(), memberService.findById(3L));
 
         Study study = new Study(10, "테스트");
-        when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
-        when(studyRepository.save(study)).thenReturn(study);
+//        when(memberService.findById(1L)).thenReturn(Optional.of(member));
+//        when(studyRepository.save(study)).thenReturn(study);
 
+        given(memberService.findById(1L)).willReturn(Optional.of(member));
+        given(studyRepository.save(study)).willReturn(study);
+
+        // when
         studyService.createNewStudy(1L, study);
 
+        // Then
         assertNotNull(study.getOwner());
         assertEquals(member, study.getOwner());
 
-        verify(memberService, times(1)).notify(study);
+//        verify(memberService, times(1)).notify(study);
+        then(memberService).should(times(1)).notify(study);
         verify(memberService, times(1)).notify(member);
+
         verify(memberService, never()).validate(any());
 
         InOrder inOrder = inOrder(memberService);
         inOrder.verify(memberService).notify(study);
 
-        verifyNoMoreInteractions(memberService);
+//        verifyNoMoreInteractions(memberService);
+        then(memberService).shouldHaveNoMoreInteractions();
 
         inOrder.verify(memberService).notify(member);// 메소드 호출 순서를 확인한다.
 
