@@ -314,3 +314,26 @@ class StudyServiceTest {
     * [Verification with timeout](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#verification_timeout)
   * 특정 시점 이후에 아무 일도 벌어지지 않았는지
     * [Finding redundant invocations](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#finding_redundant_invocations)
+
+## Mockito BDD 스타일 API
+- [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development): 애플리케이션이 어떻게 “행동”해야 하는지에 대한 공통된 이해를 구성하는 방법으로, TDD에서 창안했다.
+- 행동에 대한 스팩
+  * Title
+  * Narrative
+    * As a  / I want / so that
+  * Acceptance criteria
+    * Given / When / Then
+- Mockito는 BddMockito라는 클래스를 통해 BDD 스타일의 API를 제공한다.
+- When -> Given
+``` java
+given(memberService.findById(1L)).willReturn(Optional.of(member));
+given(studyRepository.save(study)).willReturn(study);
+```
+- Verify -> Then
+``` java
+then(memberService).should(times(1)).notify(study);
+then(memberService).shouldHaveNoMoreInteractions();
+```
+- 참고
+  * https://javadoc.io/static/org.mockito/mockito-core/3.2.0/org/mockito/BDDMockito.html
+  * https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#BDD_behavior_verification
