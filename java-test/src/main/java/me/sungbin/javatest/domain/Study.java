@@ -8,7 +8,6 @@ import me.sungbin.javatest.study.StudyStatus;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,8 +25,7 @@ public class Study {
 
     private LocalDateTime openedDateTime;
 
-    @ManyToOne
-    private Member owner;
+    private Long ownerId;
 
     public Study(int limit, String name) {
         this.limitCount = limit;
@@ -39,11 +37,6 @@ public class Study {
             throw new IllegalArgumentException("limit은 0보다 커야 한다.");
         }
         this.limitCount = limit;
-    }
-
-    public void publish() {
-        this.openedDateTime = LocalDateTime.now();
-        this.status = StudyStatus.OPENED;
     }
 
     public void open() {

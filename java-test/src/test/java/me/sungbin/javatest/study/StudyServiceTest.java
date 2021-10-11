@@ -6,25 +6,27 @@ import me.sungbin.javatest.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class StudyServiceTest {
 
     @Mock MemberService memberService;
 
-    @Mock StudyRepository studyRepository;
+    @Autowired StudyRepository studyRepository;
 
     @Test
     @DisplayName("새로운 스터디를 만드는 테스트")
@@ -71,28 +73,27 @@ class StudyServiceTest {
 //        when(studyRepository.save(study)).thenReturn(study);
 
         given(memberService.findById(1L)).willReturn(Optional.of(member));
-        given(studyRepository.save(study)).willReturn(study);
+//        given(studyRepository.save(study)).willReturn(study);
 
         // when
         studyService.createNewStudy(1L, study);
 
         // Then
-        assertNotNull(study.getOwner());
-        assertEquals(member, study.getOwner());
+        assertEquals(1L, study.getOwnerId());
 
 //        verify(memberService, times(1)).notify(study);
         then(memberService).should(times(1)).notify(study);
-        verify(memberService, times(1)).notify(member);
+//        verify(memberService, times(1)).notify(member);
 
-        verify(memberService, never()).validate(any());
+//        verify(memberService, never()).validate(any());
 
-        InOrder inOrder = inOrder(memberService);
-        inOrder.verify(memberService).notify(study);
+//        InOrder inOrder = inOrder(memberService);
+//        inOrder.verify(memberService).notify(study);
 
 //        verifyNoMoreInteractions(memberService);
         then(memberService).shouldHaveNoMoreInteractions();
 
-        inOrder.verify(memberService).notify(member);// 메소드 호출 순서를 확인한다.
+//        inOrder.verify(memberService).notify(member);// 메소드 호출 순서를 확인한다.
 
 //        studyService.createNewStudy(1L, study);
     }
@@ -104,14 +105,13 @@ class StudyServiceTest {
         StudyService studyService = new StudyService(memberService, studyRepository);
         Study study = new Study(10, "더 자바, 테스트");
         assertNull(study.getOpenedDateTime());
-        given(studyRepository.save(study)).willReturn(study);
 
         // When
         studyService.openStudy(study);
 
-        // then
+        // Then
         assertEquals(StudyStatus.OPENED, study.getStatus());
         assertNotNull(study.getOpenedDateTime());
-        then(memberService).should(times(1)).notify(study);
+        then(memberService).should().notify(study);
     }
 }
