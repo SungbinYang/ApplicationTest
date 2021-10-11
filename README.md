@@ -25,3 +25,4 @@
 
 ## 도커와 테스트
 - Testcontainers 소개
+- Testcontainers 설치
