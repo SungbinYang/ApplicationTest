@@ -33,3 +33,4 @@
 ## 04. 성능 테스트
 - JMeter 소개
 - JMeter 설치
+- JMeter 사용하기
