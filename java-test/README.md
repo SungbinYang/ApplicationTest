@@ -400,3 +400,18 @@ spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDri
 - 로그 살펴보기
   * getLogs()
   * followOutput()
+
+## Testcontainers, 컨테이너 정보를 스프링 테스트에서 참조하기
+- @ContextConfiguration
+  * 스프링이 제공하는 애노테이션으로, 스프링 테스트 컨텍스트가 사용할 설정 파일 또는 컨텍스트를 커스터마이징할 수 있는 방법을 제공한다.
+- ApplicationContextInitializer
+  * 스프링 ApplicationContext를 프로그래밍으로 초기화 할 때 사용할 수 있는 콜백 인터페이스로, 특정 프로파일을 활성화 하거나, 프로퍼티 소스를 추가하는 등의 작업을 할 수 있다.
+- TestPropertyValues
+  * 테스트용 프로퍼티 소스를 정의할 때 사용한다.
+- Environment
+  * 스프링 핵심 API로, 프로퍼티와 프로파일을 담당한다.
+- 전체 흐름
+  * Testcontainer를 사용해서 컨테이너 생성
+  * ApplicationContextInitializer를 구현하여 생선된 컨테이너에서 정보를 축출하여 Environment에 넣어준다.
+  * @ContextConfiguration을 사용해서 ApplicationContextInitializer 구현체를 등록한다.
+  * 테스트 코드에서 Environment, @Value, @ConfigurationProperties 등 다양한 방법으로 해당 프로퍼티를 사용한다.
