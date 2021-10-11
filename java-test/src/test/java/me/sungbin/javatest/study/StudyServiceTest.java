@@ -53,7 +53,8 @@ class StudyServiceTest {
 
     @Container
     static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
-            .withExposedService("study-db", 5432);
+            .withEnv("POSTGRES_PASSWORD", "studytest")
+            .withExposedService("java-test-study-db-1", 5432);
 
 //    @BeforeAll
 //    static void beforeAll() {

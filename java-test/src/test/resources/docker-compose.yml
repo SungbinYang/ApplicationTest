@@ -1,11 +1,11 @@
 version: "3"
 
 services:
-  study-db:
-    image: postgres
-    ports:
-      - 5432
-    environment:
-      POSTGRES_PASSWORD: studytest
-      POSTGRES_USER: studytest
-      POSTGRES_DB: studytest
+    java-test-study-db-1:
+      image: postgres
+      ports:
+        - 5432
+      environment:
+        POSTGRES_PASSWORD: studytest
+        POSTGRES_USER: studytest
+        POSTGRES_DB: studytest
