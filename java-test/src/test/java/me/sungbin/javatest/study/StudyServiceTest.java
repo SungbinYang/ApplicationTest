@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.sungbin.javatest.domain.Member;
 import me.sungbin.javatest.domain.Study;
 import me.sungbin.javatest.member.MemberService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.File;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,33 +43,39 @@ class StudyServiceTest {
 
 //    @Autowired Environment environment;
 
-    @Value("${container.port}")
-    int port;
+    @Value("${container.port}") int port;
+//
+//    @Container
+//    static GenericContainer postgreSQLContainer = new GenericContainer("postgres")
+//            .withExposedPorts(5432)
+//            .withEnv("POSTGRES_PASSWORD", "studytest")
+//            .withEnv("POSTGRES_DB", "studytest");
 
     @Container
-    static GenericContainer postgreSQLContainer = new GenericContainer("postgres")
-            .withExposedPorts(5432)
-            .withEnv("POSTGRES_PASSWORD", "studytest")
-            .withEnv("POSTGRES_DB", "studytest");
+    static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
+            .withExposedService("study-db", 5432);
 
-    @BeforeAll
-    static void beforeAll() {
-        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(log);
-        postgreSQLContainer.followOutput(logConsumer);
-    }
+//    @BeforeAll
+//    static void beforeAll() {
+//        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(log);
+//        postgreSQLContainer.followOutput(logConsumer);
+//    }
 
-    @BeforeEach
-    void beforeEach() {
-        System.out.println("==============================");
-//        System.out.println(environment.getProperty("container.port"));
-        System.out.println(port);
-
-        studyRepository.deleteAll();
-    }
+//    @BeforeEach
+//    void beforeEach() {
+//        System.out.println("==============================");
+////        System.out.println(environment.getProperty("container.port"));
+//        System.out.println(port);
+//
+//        studyRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName("새로운 스터디를 만드는 테스트")
     void createNewStudy() {
+
+        System.out.println("======================");
+        System.out.println(port);
 
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
@@ -161,7 +164,7 @@ class StudyServiceTest {
 
         @Override
         public void initialize(ConfigurableApplicationContext context) {
-            TestPropertyValues.of("container.port=" + postgreSQLContainer.getMappedPort(5432))
+            TestPropertyValues.of("container.port=" + composeContainer.getServicePort("study-db", 5432))
                     .applyTo(context.getEnvironment());
         }
     }
