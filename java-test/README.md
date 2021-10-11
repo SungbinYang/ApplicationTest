@@ -467,3 +467,10 @@ static class ContainerPropertyInitializer implements ApplicationContextInitializ
 - 대체제:
   * [Gatling](https://gatling.io/)
   * [nGrinder](https://naver.github.io/ngrinder/)
+
+## JMeter 설치
+- https://jmeter.apache.org/download_jmeter.cgi
+- 압축 파일 받고 압축 파일 풀기. 원한다면 PATH에 bin 디렉토리를 추가.
+-  bin/jmeter 실행하기
+
+<img width="1434" alt="스크린샷 2021-10-12 오전 5 16 00" src="https://user-images.githubusercontent.com/18282470/136850498-0c581b99-ee6a-4503-8059-28fc422e20a5.png">
