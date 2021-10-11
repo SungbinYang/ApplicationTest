@@ -344,3 +344,41 @@ then(memberService).shouldHaveNoMoreInteractions();
   * 테스트 실행시 DB를 설정하거나 별도의 프로그램 또는 스크립트를 실행할 필요 없다.
   * 보다 Production에 가까운 테스트를 만들 수 있다.
   * 테스트가 느려진다.
+
+## Testcontainers 설치
+- Testcontainers JUnit 5 지원 모듈 설치
+
+``` xml
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>1.15.1</version>
+    <scope>test</scope>
+</dependency>
+```
+
+- https://www.testcontainers.org/test_framework_integration/junit_5/
+- @Testcontainers
+  * JUnit 5 확장팩으로 테스트 클래스에 @Container를 사용한 필드를 찾아서 컨테이너 라이프사이클 관련 메소드를 실행해준다.
+- @Container
+  * 인스턴스 필드에 사용하면 모든 테스트 마다 컨테이너를 재시작 하고, 스태틱 필드에 사용하면 클래스 내부 모든 테스트에서 동일한 컨테이너를 재사용한다.
+- 여러 모듈을 제공하는데, 각 모듈은 별도로 설치해야 한다.
+  * Postgresql 모듈 설치
+  * https://www.testcontainers.org/modules/databases/
+  * https://www.testcontainers.org/modules/databases/postgres/
+
+``` xml
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>1.15.1</version>
+    <scope>test</scope>
+</dependency>
+```
+
+- application.properties
+
+``` properties
+spring.datasource.url=jdbc:tc:postgresql:///studytest
+spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver
+```
