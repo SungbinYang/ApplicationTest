@@ -415,3 +415,33 @@ spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDri
   * ApplicationContextInitializer를 구현하여 생선된 컨테이너에서 정보를 축출하여 Environment에 넣어준다.
   * @ContextConfiguration을 사용해서 ApplicationContextInitializer 구현체를 등록한다.
   * 테스트 코드에서 Environment, @Value, @ConfigurationProperties 등 다양한 방법으로 해당 프로퍼티를 사용한다.
+
+## Testcontainers 도커 Compose 사용하기
+- 테스트에서 (서로 관련있는) 여러 컨테이너를 사용해야 한다면?
+- Docker Compose: https://docs.docker.com/compose/
+  * 여러 컨테이너를 한번에 띄우고 서로 간의 의존성 및 네트워크 등을 설정할 수 있는 방법
+  * docker-compose up / down
+- Testcontainser의 docker compose 모듈을 사용할 수 있다.
+  * https://www.testcontainers.org/modules/docker_compose/
+- 대체제: https://github.com/palantir/docker-compose-rule
+  * 2019 가을 KSUG 발표 자료 참고
+  * https://bit.ly/2q8S3Qo
+- 도커 Compose 서비스 정보 참조하기
+- 특정 서비스 Expose
+``` java
+@Container
+static DockerComposeContainer composeContainer =
+        new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
+        .withExposedService("study-db", 5432);
+```
+- Compose 서비스 정보 참조
+``` java
+static class ContainerPropertyInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    @Override
+    public void initialize(ConfigurableApplicationContext context) {
+        TestPropertyValues.of("container.port=" + composeContainer.getServicePort("study-db", 5432))
+                .applyTo(context.getEnvironment());
+    }
+}
+```
