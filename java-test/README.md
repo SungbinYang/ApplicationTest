@@ -382,3 +382,21 @@ then(memberService).shouldHaveNoMoreInteractions();
 spring.datasource.url=jdbc:tc:postgresql:///studytest
 spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver
 ```
+
+## Testcontainers 기능 살펴보기
+- 컨테이너 만들기
+  * New GenericContainer(String imageName)
+- 네트워크
+  * withExposedPorts(int...)
+  * getMappedPort(int)
+- 환경 변수 설정
+  * withEnv(key, value)
+- 명령어 실행
+  * withCommand(String cmd...)
+- 사용할 준비가 됐는지 확인하기
+  * waitingFor(Wait)
+  * Wait.forHttp(String url)
+  * Wait.forLogMessage(String message)
+- 로그 살펴보기
+  * getLogs()
+  * followOutput()
