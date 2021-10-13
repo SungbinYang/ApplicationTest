@@ -512,3 +512,34 @@ static class ContainerPropertyInitializer implements ApplicationContextInitializ
 - 카오스 멍키 스프링 부트 주요 개념
  
   ![스크린샷 2021-10-14 오전 5 35 18](https://user-images.githubusercontent.com/18282470/137208791-c274c1ca-8ea3-4d31-b12a-1c5df578b767.png)
+
+## Chaos Monkey 설치
+- 의존성 추가
+
+``` xml
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>chaos-monkey-spring-boot</artifactId>
+    <version>2.1.1</version>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+- Chaos-monkey-spring-boot
+  * 스프링 부트용 카오스 멍키 제공
+- Spring-boot-starter-actuator
+  * 스프링 부트 운영 툴로, 런타임 중에 카오스 멍키 설정을 변경할 수 있다.
+  * 그밖에도 헬스 체크, 로그 레벨 변경, 매트릭스 데이터 조회 등 다양한 운영 툴로 사용 가능.
+  * /actuator
+- 카오스 멍키 활성화
+  * spring.profiles.active=chaos-monkey
+- 스프링 부트 Actuator 엔드 포인트 활성화
+
+``` properties
+management.endpoint.chaosmonkey.enabled=true
+management.endpoints.web.exposure.include=health,info,chaosmonkey
+```
