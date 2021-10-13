@@ -39,3 +39,4 @@
 - Chaos Monkey 소개
 - CM4SB 설치
 - CM4SB 응답 지연
+- CM4SB 에러 발생
