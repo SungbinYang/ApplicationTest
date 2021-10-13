@@ -561,3 +561,12 @@ management.endpoints.web.exposure.include=health,info,chaosmonkey
   * A ->  B1, B2
 - 참고:
   * https://codecentric.github.io/chaos-monkey-spring-boot/2.1.1/#_customize_watcher
+
+## CM4SB 에러 발생
+- 에러 발생 재현 방법
+ 
+``` bash
+http POST localhost:8080/actuator/chaosmonkey/assaults level=3 latencyActive=false exceptionsActive=true exception.type=java.lang.RuntimeException
+```
+
+- https://codecentric.github.io/chaos-monkey-spring-boot/2.1.1/#_examples
