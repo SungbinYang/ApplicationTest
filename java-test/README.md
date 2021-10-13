@@ -497,3 +497,18 @@ static class ContainerPropertyInitializer implements ApplicationContextInitializ
   * 응답 본문 확인
 - CLI 사용하기
   * meter -n -t 설정 파일 -l 리포트 파일
+
+## Chaos Monkey 소개
+- [카오스 엔지니어링](http://channy.creation.net/blog/1173) 툴
+  * 프로덕션 환경, 특히 분산 시스템 환경에서 불확실성을 파악하고 해결 방안을 모색하는데 사용하는 툴
+- 운영 환경 불확실성의 예
+  * 네트워크 지연
+  * 서버 장애
+  * 디스크 오작동
+  * 메모리 누수
+- [카오스 멍키 스프링 부트](https://codecentric.github.io/chaos-monkey-spring-boot/)
+  * 스프링 부트 애플리케이션에 카오스 멍키를 손쉽게 적용해 볼 수 있는 툴
+  * 즉, 스프링 부트 애플리케이션을 망가트릴 수 있는 툴
+- 카오스 멍키 스프링 부트 주요 개념
+ 
+  ![스크린샷 2021-10-14 오전 5 35 18](https://user-images.githubusercontent.com/18282470/137208791-c274c1ca-8ea3-4d31-b12a-1c5df578b767.png)
