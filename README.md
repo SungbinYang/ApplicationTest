@@ -38,3 +38,4 @@
 ## 05. 운영 이슈 테스트
 - Chaos Monkey 소개
 - CM4SB 설치
+- CM4SB 응답 지연
