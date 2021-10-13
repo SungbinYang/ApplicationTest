@@ -543,3 +543,21 @@ static class ContainerPropertyInitializer implements ApplicationContextInitializ
 management.endpoint.chaosmonkey.enabled=true
 management.endpoints.web.exposure.include=health,info,chaosmonkey
 ```
+
+## CM4SB 응답 지연
+- 응답 지연 이슈 재현 방법
+  * Repository Watcher 활성화
+    * chaos.monkey.watcher.repository=true
+  * 카오스 멍키 활성화
+    * http post localhost:8080/actuator/chaosmonkey/enable
+  * 카오스 멍키 활서화 확인
+    * http localhost:8080/actuator/chaosmonkey/status
+  * 카오스 멍키 와처 확인
+    * http localhost:8080/actuator/chaosmonkey/watchers
+  * 카오스 멍키 지연 공격 설정
+    * http POST localhost:8080/actuator/chaosmonkey/assaults level=3 latencyRangeStart=2000 latencyRangeEnd=5000 latencyActive=true
+  * 테스트
+    * JMeter 확인
+  * A ->  B1, B2
+- 참고:
+  * https://codecentric.github.io/chaos-monkey-spring-boot/2.1.1/#_customize_watcher
