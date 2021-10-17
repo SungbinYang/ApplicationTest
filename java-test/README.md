@@ -630,3 +630,31 @@ public void Services_should_only_be_accessed_by_Controllers() {
     * (반대로) ..domain.. 패키지는 ..member.. 패키지를 참조하지 못한다.
   * ..study.. 패키지에 있는 클래스는 ..study.. 에서만 참조 가능.
   * 순환 참조 없어야 한다.
+
+## ArchUnit: JUnit 5 연동하기
+- @AnalyzeClasses: 클래스를 읽어들여서 확인할 패키지 설정
+- @ArchTest: 확인할 규칙 정의
+
+``` java
+@AnalyzeClasses(packagesOf = App.class)
+public class ArchTests {
+
+    @ArchTest
+    ArchRule domainPackageRule = classes().that().resideInAPackage("..domain..")
+            .should().onlyBeAccessed().byClassesThat()
+            .resideInAnyPackage("..study..", "..member..", "..domain..");
+
+    @ArchTest
+    ArchRule memberPackageRule = noClasses().that().resideInAPackage("..domain..")
+            .should().accessClassesThat().resideInAPackage("..member..");
+
+    @ArchTest
+    ArchRule studyPackageRule = noClasses().that().resideOutsideOfPackage("..study..")
+            .should().accessClassesThat().resideInAnyPackage("..study..");
+
+    @ArchTest
+    ArchRule freeOfCycles = slices().matching("..inflearnthejavatest.(*)..")
+            .should().beFreeOfCycles();
+
+}
+```
