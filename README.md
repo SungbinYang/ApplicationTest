@@ -44,3 +44,4 @@
 ## 06. 아키텍쳐 테스트
 - ArchUnit 소개
 - ArchUnit 설치
+- ArchUnit 패키지 의존성 확인하기
