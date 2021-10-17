@@ -584,4 +584,37 @@ http POST localhost:8080/actuator/chaosmonkey/assaults level=3 latencyActive=fal
   * https://blogs.oracle.com/javamagazine/unit-test-your-architecture-with-archunit
   * https://www.archunit.org/userguide/html/000_Index.html
   * [Moduliths](https://github.com/odrotbohm/moduliths)
+
+## ArchUnit 설치
+- https://www.archunit.org/userguide/html/000_Index.html#_junit_5
+- JUnit 5용 ArchUnit 설치
+``` xml
+<dependency>
+    <groupId>com.tngtech.archunit</groupId>
+    <artifactId>archunit-junit5-engine</artifactId>
+    <version>0.12.0</version>
+    <scope>test</scope>
+</dependency>
+```
  
+- 주요 사용법
+  * 특정 패키지에 해당하는 클래스를 (바이트코드를 통해) 읽어들이고
+  * 확인할 규칙을 정의하고
+  * 읽어들인 클래스들이 그 규칙을 잘 따르는지 확인한다.
+
+``` java
+@Test
+public void Services_should_only_be_accessed_by_Controllers() {
+    JavaClasses importedClasses = new ClassFileImporter().importPackages("com.mycompany.myapp");
+
+    ArchRule myRule = classes()
+        .that().resideInAPackage("..service..")
+        .should().onlyBeAccessed().byAnyPackage("..controller..", "..service..");
+
+    myRule.check(importedClasses);
+}
+```
+
+- JUnit 5 확장팩 제공
+  * @AnalyzeClasses: 클래스를 읽어들여서 확인할 패키지 설정
+  * @ArchTest: 확인할 규칙 정의
