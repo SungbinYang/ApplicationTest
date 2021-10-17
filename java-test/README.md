@@ -658,3 +658,13 @@ public class ArchTests {
 
 }
 ```
+
+## ArchUnit: 클래스 의존성 확인하기
+- 확인하려는 클래스 의존성
+
+![스크린샷 2021-10-17 오후 3 52 48](https://user-images.githubusercontent.com/18282470/137615268-c9a524be-a4c2-4095-a799-047da00594db.png)
+
+- 테스트 할 내용
+  * StudyController는 StudyService와 StudyRepository를 사용할 수 있다.
+  * Study* 로 시작하는 클래스는 ..study.. 패키지에 있어야 한다.
+  * StudyRepository는 StudyService와 StudyController를 사용할 수 없다.
