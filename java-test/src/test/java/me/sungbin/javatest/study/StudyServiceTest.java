@@ -3,6 +3,7 @@ package me.sungbin.javatest.study;
 import lombok.extern.slf4j.Slf4j;
 import me.sungbin.javatest.domain.Member;
 import me.sungbin.javatest.domain.Study;
+import me.sungbin.javatest.domain.StudyStatus;
 import me.sungbin.javatest.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
