@@ -47,3 +47,6 @@
 - ArchUnit 패키지 의존성 확인하기
 - ArchUnit Junit5 연동
 - ArchUnit 클래스 의존성 확인하기
+
+## 07. 정리
+- 마무리
