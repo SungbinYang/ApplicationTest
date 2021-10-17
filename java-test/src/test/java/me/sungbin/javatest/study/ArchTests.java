@@ -1,37 +1,30 @@
 package me.sungbin.javatest.study;
 
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.junit.AnalyzeClasses;
+import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import org.junit.jupiter.api.Test;
+import me.sungbin.javatest.App;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
-import static org.junit.jupiter.api.Assertions.*;
 
+@AnalyzeClasses(packagesOf = App.class)
 class ArchTests {
 
-    @Test
-    void packageDependencyTests() {
-        JavaClasses classes = new ClassFileImporter().importPackages("me.sungbin.javatest");
+    @ArchTest
+    ArchRule domainPackageRule = classes().that().resideInAPackage("..domain..")
+            .should().onlyBeAccessed().byClassesThat().resideInAnyPackage("..study..", "..member..", "..domain..");
 
-        ArchRule domainPackageRule = classes().that().resideInAPackage("..domain..")
-                .should().onlyBeAccessed().byClassesThat().resideInAnyPackage("..study..", "..member..", "..domain..");
+    @ArchTest
+    ArchRule memberPackageRule = noClasses().that().resideInAPackage("..domain..")
+            .should().accessClassesThat().resideInAPackage("..member..");
 
-        domainPackageRule.check(classes);
+    @ArchTest
+    ArchRule studyPackageRule = noClasses().that().resideOutsideOfPackage("..study..")
+            .should().accessClassesThat().resideInAPackage("..study..");
 
-        ArchRule memberPackageRule = noClasses().that().resideInAPackage("..domain..")
-                .should().accessClassesThat().resideInAPackage("..member..");
-        memberPackageRule.check(classes);
-
-        ArchRule studyPackageRule = noClasses().that().resideOutsideOfPackage("..study..")
-                .should().accessClassesThat().resideInAPackage("..study..");
-
-        studyPackageRule.check(classes);
-
-        ArchRule freeOfCycles = slices().matching("..javatest.(*)..")
-                .should().beFreeOfCycles();
-        freeOfCycles.check(classes);
-    }
+    @ArchTest
+    ArchRule freeOfCycles = slices().matching("..javatest.(*)..")
+            .should().beFreeOfCycles();
 }
