@@ -668,3 +668,13 @@ public class ArchTests {
   * StudyController는 StudyService와 StudyRepository를 사용할 수 있다.
   * Study* 로 시작하는 클래스는 ..study.. 패키지에 있어야 한다.
   * StudyRepository는 StudyService와 StudyController를 사용할 수 없다.
+
+## 마무리
+- [Selenium WebDriver](https://www.selenium.dev/projects/)
+  * 웹 브라우저 기반 자동화된 테스트 작성에 사용할 수 있는 툴
+- [DBUnit](http://dbunit.sourceforge.net/)
+  * 데이터베이스에 데이터를 CVS, Excel 등으로 넣어주는 툴
+- [REST Assured](https://rest-assured.io/)
+  * REST API 테스트 라이브러리
+- [Cucumber](https://cucumber.io/)
+  * BDD를 지원하는 테스트 라이브러리.
