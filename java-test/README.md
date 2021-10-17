@@ -618,3 +618,15 @@ public void Services_should_only_be_accessed_by_Controllers() {
 - JUnit 5 확장팩 제공
   * @AnalyzeClasses: 클래스를 읽어들여서 확인할 패키지 설정
   * @ArchTest: 확인할 규칙 정의
+
+## ArchUnit: 패키지 의존성 확인하기
+- 확인하려는 패키지 구조
+ 
+![스크린샷 2021-10-17 오후 2 23 33](https://user-images.githubusercontent.com/18282470/137613010-bbda9d27-b197-40d0-ae69-fa66ddffcf8c.png)
+
+- 실제로 그런지 확인하려면...
+  * ..domain.. 패키지에 있는 클래스는 ..study.., ..member.., ..domain에서 참조 가능.
+  * ..member.. 패키지에 있는 클래스는 ..study..와 ..member..에서만 참조 가능.
+    * (반대로) ..domain.. 패키지는 ..member.. 패키지를 참조하지 못한다.
+  * ..study.. 패키지에 있는 클래스는 ..study.. 에서만 참조 가능.
+  * 순환 참조 없어야 한다.
